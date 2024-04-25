@@ -65,14 +65,12 @@ Based on the user's answers, the system should apply the following rules to gene
 9. If the user's price range is less than $3, remove lime and watermelon.
 10. If the user's price range is between $4 and $7, remove pears and apples.
 
-Now, please generate a list of recommended fruits based on the user's responses to the questions.
+Now, please generate a list of recommended fruits based on the user's responses to the questions. Please the response should be correct.
 
 User Responses:
-1. Do you go out to party on weekends? (yes or no): {party_on_weekends}
-2. What flavors do you like? (cider, sweet, waterlike): {flavours}
-3. What texture do you dislike? (smooth, slimy, rough): {texture_dislike}
-4. What price range will you buy a drink for? ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10): {price_range}
+{user_response}
 
+Recommended Fruits:
 """
 
 os.environ['OPENAI_API_KEY'] = os.getenv('openai_api_key')
@@ -99,10 +97,7 @@ def gpt_recommend(user_response):
 def get_recommendations():
     data = request.get_json()
     answers = {
-        'party_on_weekends': data['party_on_weekends'],
-        'flavours': data['flavours'],
-        'texture_dislike': data['texture_dislike'],
-        'price_range': data['price_range']
+        'user_response': data['user_response']
     }
     # using gpt recommendation
     recommended_fruits = gpt_recommend(answers)
