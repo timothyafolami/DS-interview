@@ -1,0 +1,8 @@
+openai
+langchain
+docx2txt
+langchain_community 
+langchain 
+langchain-pinecone 
+langchain-openai
+sentence_transformers
