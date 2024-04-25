@@ -8,6 +8,7 @@ load_dotenv()
 app = Flask(__name__)
 
 
+# A Conditional Recommender System
 def recommend_fruits(answers):
     allowed_fruits = ['oranges', 'apples', 'pears', 'grapes', 'watermelon', 'lemon', 'lime']
 
@@ -75,7 +76,11 @@ User Responses:
 """
 
 os.environ['OPENAI_API_KEY'] = os.getenv('openai_api_key')
+
 client = OpenAI()
+
+# GPT-3.5 API recommendation
+
 def gpt_recommend(user_response):
     #Todo: Should be generoted with the context/contexts we find by doing semantaic search
     response = client.chat.completions.create(
@@ -89,6 +94,7 @@ def gpt_recommend(user_response):
     )
     return response.choices[0].message.content
 
+# Route to get recommendations
 @app.route('/recommend_fruits', methods=['POST'])
 def get_recommendations():
     data = request.get_json()
@@ -98,6 +104,7 @@ def get_recommendations():
         'texture_dislike': data['texture_dislike'],
         'price_range': data['price_range']
     }
+    # using gpt recommendation
     recommended_fruits = gpt_recommend(answers)
     return recommended_fruits
 
